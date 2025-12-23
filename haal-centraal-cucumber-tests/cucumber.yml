@@ -1,0 +1,10 @@
+default: --format pretty --format json --out reports/cucumber.json
+html: --format html --out reports/cucumber.html
+junit: --format junit --out reports/
+
+
+
+
+
+
+

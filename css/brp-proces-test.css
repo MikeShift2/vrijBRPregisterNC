@@ -1,0 +1,437 @@
+/**
+ * BRP Proces Test Pagina Styles
+ */
+
+.brp-proces-test-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.brp-proces-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #0066cc;
+}
+
+.brp-proces-header h1 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2.5em;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* Proces Stappen */
+.proces-stappen {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.proces-stappen::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ddd;
+    z-index: 0;
+}
+
+.stap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.stap:hover {
+    transform: translateY(-5px);
+}
+
+.stap-nummer {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ddd;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+}
+
+.stap.active .stap-nummer {
+    background: #0066cc;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
+}
+
+.stap.completed .stap-nummer {
+    background: #28a745;
+    color: white;
+}
+
+.stap-titel {
+    font-size: 0.9em;
+    color: #666;
+    text-align: center;
+    font-weight: 500;
+}
+
+.stap.active .stap-titel {
+    color: #0066cc;
+    font-weight: bold;
+}
+
+/* Proces Stap Content */
+.proces-stap-content {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.proces-stap-content h2 {
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: #0066cc;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0052a3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+/* Result Boxes */
+.result-box {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    display: none;
+}
+
+.result-box.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    display: block;
+}
+
+.result-box.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    display: block;
+}
+
+.result-box.info {
+    background: #d1ecf1;
+    border: 1px solid #bee5eb;
+    color: #0c5460;
+    display: block;
+}
+
+/* Person Details */
+.person-details {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    display: none;
+}
+
+.person-details.show {
+    display: block;
+}
+
+.person-details h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.person-details .detail-row {
+    display: flex;
+    padding: 8px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.person-details .detail-label {
+    font-weight: 500;
+    width: 200px;
+    color: #666;
+}
+
+.person-details .detail-value {
+    flex: 1;
+    color: #333;
+}
+
+/* Validatie Box */
+.validatie-box {
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.validatie-box.success {
+    background: #d4edda;
+    border: 2px solid #28a745;
+}
+
+.validatie-box.error {
+    background: #f8d7da;
+    border: 2px solid #dc3545;
+}
+
+.validatie-box.warning {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+}
+
+.validatie-details {
+    margin-top: 20px;
+}
+
+.validatie-item {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.validatie-item.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.validatie-item.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.validatie-item .icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+/* Document List */
+.document-list {
+    margin-top: 20px;
+}
+
+.document-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border-left: 4px solid #0066cc;
+}
+
+.document-item .icon {
+    font-size: 2em;
+    margin-right: 15px;
+    color: #0066cc;
+}
+
+.document-item .info {
+    flex: 1;
+}
+
+.document-item .title {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.document-item .meta {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Status Overview */
+.status-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.status-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-card h4 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.status-card .status-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #0066cc;
+    margin: 10px 0;
+}
+
+.status-card .status-label {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Proces Log */
+.proces-log {
+    margin-top: 40px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.proces-log h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.log-content {
+    max-height: 300px;
+    overflow-y: auto;
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.log-entry {
+    padding: 5px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-entry .timestamp {
+    color: #666;
+    margin-right: 10px;
+}
+
+.log-entry .level {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.log-entry .level.info {
+    color: #0066cc;
+}
+
+.log-entry .level.success {
+    color: #28a745;
+}
+
+.log-entry .level.error {
+    color: #dc3545;
+}
+
+.log-entry .message {
+    color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .proces-stappen {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .proces-stappen::before {
+        display: none;
+    }
+
+    .status-overview {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+
+
+
+

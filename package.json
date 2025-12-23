@@ -1,0 +1,19 @@
+{
+  "name": "nextcloud",
+  "version": "1.0.0",
+  "description": "Nextcloud geïnstalleerd via Docker, verbonden met een lokale PostgreSQL database, inclusief OpenRegister app met Solr en Ollama voor AI-functionaliteiten.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "playwright": "^1.57.0"
+  }
+}

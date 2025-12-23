@@ -1,0 +1,267 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Personen (Haal Centraal BRP)",
+  "description": "Ingeschreven Persoon volgens Haal Centraal BRP Bevragen API met nested objects",
+  "properties": {
+    "burgerservicenummer": {
+      "type": "string",
+      "pattern": "^[0-9]{9}$",
+      "description": "Het burgerservicenummer (BSN) van de persoon"
+    },
+    "aNummer": {
+      "type": "string",
+      "pattern": "^[0-9]{10}$",
+      "description": "Administratienummer (A-nummer) van de persoon"
+    },
+    "naam": {
+      "type": "object",
+      "description": "Naamgegevens van de persoon",
+      "properties": {
+        "voornamen": {
+          "type": "string",
+          "description": "Voornamen van de persoon"
+        },
+        "voorvoegsel": {
+          "type": "string",
+          "description": "Voorvoegsel van de geslachtsnaam (bijv. van, de, van der)"
+        },
+        "geslachtsnaam": {
+          "type": "string",
+          "description": "Geslachtsnaam (achternaam) van de persoon"
+        },
+        "volledigeNaam": {
+          "type": "string",
+          "description": "Volledige naam zoals die moet worden gebruikt bij aanschrijving"
+        }
+      }
+    },
+    "geboorte": {
+      "type": "object",
+      "description": "Geboortegegevens van de persoon",
+      "properties": {
+        "datum": {
+          "type": "object",
+          "description": "Geboortedatum",
+          "properties": {
+            "datum": {
+              "type": "string",
+              "format": "date",
+              "description": "Geboortedatum in ISO 8601 formaat (YYYY-MM-DD)"
+            },
+            "jaar": {
+              "type": "integer",
+              "description": "Geboortejaar"
+            },
+            "maand": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12,
+              "description": "Geboortemaand"
+            },
+            "dag": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 31,
+              "description": "Geboortedag"
+            }
+          }
+        },
+        "plaats": {
+          "type": "string",
+          "description": "Geboorteplaats"
+        },
+        "land": {
+          "type": "object",
+          "description": "Geboorteland",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "ISO 3166-1 alpha-2 landcode"
+            },
+            "omschrijving": {
+              "type": "string",
+              "description": "Naam van het land"
+            }
+          }
+        }
+      }
+    },
+    "geslacht": {
+      "type": "object",
+      "description": "Geslachtsaanduiding van de persoon",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": ["M", "V", "O"],
+          "description": "Geslachtscode: M (man), V (vrouw), O (onbekend)"
+        },
+        "omschrijving": {
+          "type": "string",
+          "enum": ["man", "vrouw", "onbekend"],
+          "description": "Geslachtsomschrijving"
+        }
+      }
+    },
+    "verblijfplaats": {
+      "type": "object",
+      "description": "Gegevens over de verblijfplaats van de persoon",
+      "properties": {
+        "straatnaam": {
+          "type": "string",
+          "description": "Naam van de straat"
+        },
+        "huisnummer": {
+          "type": "integer",
+          "description": "Huisnummer"
+        },
+        "huisletter": {
+          "type": "string",
+          "description": "Huisletter"
+        },
+        "huisnummertoevoeging": {
+          "type": "string",
+          "description": "Huisnummertoevoeging"
+        },
+        "postcode": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]{3}[A-Z]{2}$",
+          "description": "Postcode in formaat 1234AB"
+        },
+        "woonplaats": {
+          "type": "string",
+          "description": "Naam van de woonplaats"
+        },
+        "land": {
+          "type": "object",
+          "description": "Land van verblijfplaats",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "ISO 3166-1 alpha-2 landcode"
+            },
+            "omschrijving": {
+              "type": "string",
+              "description": "Naam van het land"
+            }
+          }
+        },
+        "datumAanvangAdreshouding": {
+          "type": "string",
+          "format": "date",
+          "description": "Datum waarop persoon op dit adres is komen wonen"
+        }
+      }
+    },
+    "_embedded": {
+      "type": "object",
+      "description": "Embedded relaties volgens Haal Centraal BRP Bevragen API",
+      "properties": {
+        "partners": {
+          "type": "array",
+          "description": "Partners/echtgenoten van de persoon",
+          "items": {
+            "type": "object",
+            "properties": {
+              "burgerservicenummer": {
+                "type": "string",
+                "description": "BSN van de partner"
+              },
+              "naam": {
+                "type": "object",
+                "description": "Naam van de partner"
+              },
+              "soortVerbintenis": {
+                "type": "string",
+                "enum": ["huwelijk", "geregistreerd_partnerschap"],
+                "description": "Type verbintenis"
+              },
+              "datumSluiting": {
+                "type": "string",
+                "format": "date",
+                "description": "Datum sluiting verbintenis"
+              }
+            }
+          }
+        },
+        "kinderen": {
+          "type": "array",
+          "description": "Kinderen van de persoon",
+          "items": {
+            "type": "object",
+            "properties": {
+              "burgerservicenummer": {
+                "type": "string",
+                "description": "BSN van het kind"
+              },
+              "naam": {
+                "type": "object",
+                "description": "Naam van het kind"
+              }
+            }
+          }
+        },
+        "ouders": {
+          "type": "array",
+          "description": "Ouders van de persoon",
+          "items": {
+            "type": "object",
+            "properties": {
+              "burgerservicenummer": {
+                "type": "string",
+                "description": "BSN van de ouder"
+              },
+              "naam": {
+                "type": "object",
+                "description": "Naam van de ouder"
+              }
+            }
+          }
+        },
+        "nationaliteiten": {
+          "type": "array",
+          "description": "Nationaliteiten van de persoon",
+          "items": {
+            "type": "object",
+            "properties": {
+              "nationaliteit": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Nationaliteitscode"
+                  },
+                  "omschrijving": {
+                    "type": "string",
+                    "description": "Nationaliteitsomschrijving"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "_metadata": {
+      "type": "object",
+      "description": "Interne metadata voor Open Register (niet onderdeel van Haal Centraal spec)",
+      "properties": {
+        "pl_id": {
+          "type": "integer",
+          "description": "Persoonslijst ID uit probev database"
+        },
+        "ax": {
+          "type": "string",
+          "enum": ["A", "X"],
+          "description": "Actueel (A) of Archief (X)"
+        },
+        "hist": {
+          "type": "string",
+          "enum": ["A", "Z"],
+          "description": "Actueel record (A) of Historie (Z)"
+        }
+      }
+    }
+  },
+  "required": ["burgerservicenummer"]
+}

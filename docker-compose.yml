@@ -1,0 +1,102 @@
+services:
+  db:
+    image: mariadb:10.6
+    container_name: nextcloud-db
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+      - MYSQL_ROOT_PASSWORD=!ChangeMe!
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud_user
+      - MYSQL_PASSWORD=nextcloud_secure_pass_2024
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - nextcloud_network
+
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - nextcloud_data:/var/www/html
+      - ./docker/entrypoint-openregister.sh:/entrypoint-openregister.sh:ro
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud_user
+      - MYSQL_PASSWORD=nextcloud_secure_pass_2024
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN_USER}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
+      - PHP_MEMORY_LIMIT=4G
+      - UPLOAD_MAX_SIZE=2G
+      - POST_MAX_SIZE=2G
+      - TZ=Europe/Amsterdam
+    networks:
+      - nextcloud_network
+    depends_on:
+      - db
+      - nextcloud-cron
+      - openregister-solr
+      - openregister-ollama
+    entrypoint: >
+      /bin/bash -c "
+      /entrypoint-openregister.sh &
+      exec /entrypoint.sh apache2-foreground
+      "
+
+  nextcloud-cron:
+    image: nextcloud:latest
+    container_name: nextcloud-cron
+    restart: unless-stopped
+    volumes:
+      - nextcloud_data:/var/www/html
+    entrypoint: /cron.sh
+    networks:
+      - nextcloud_network
+
+  openregister-solr:
+    image: solr:9-slim
+    container_name: openregister-solr
+    restart: unless-stopped
+    ports:
+      - "8983:8983"
+    environment:
+      - SOLR_HEAP=512m
+    volumes:
+      - solr_data:/var/solr
+    networks:
+      nextcloud_network:
+        aliases:
+          - solr
+    command: solr-foreground
+
+  openregister-ollama:
+    image: ollama/ollama:latest
+    container_name: openregister-ollama
+    restart: unless-stopped
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      nextcloud_network:
+        aliases:
+          - ollama
+
+volumes:
+  nextcloud_data:
+    driver: local
+  db_data:
+    driver: local
+  solr_data:
+    driver: local
+  ollama_data:
+    driver: local
+
+networks:
+  nextcloud_network:
+    driver: bridge
+

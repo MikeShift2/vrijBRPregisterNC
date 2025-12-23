@@ -1,0 +1,12 @@
+# Environment variables
+.env
+
+# Docker volumes data (optioneel - als je deze niet wilt committen)
+# nextcloud_data/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
