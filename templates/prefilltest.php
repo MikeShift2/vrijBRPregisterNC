@@ -13,33 +13,33 @@ script('openregister', 'prefill-test');
     <!-- Search Bar -->
     <div class="search-bar">
         <div class="search-input-wrapper">
-            <input 
-                type="text" 
-                id="prefill-search-input" 
+                    <input 
+                        type="text" 
+                        id="prefill-search-input" 
                 placeholder="Zoek op BSN of achternaam..." 
-                class="search-input"
-                autocomplete="off"
-            />
-            <button id="prefill-search-btn" class="search-button">
+                        class="search-input"
+                        autocomplete="off"
+                    />
+                    <button id="prefill-search-btn" class="search-button">
                 <span>Zoek</span>
-            </button>
-        </div>
+                    </button>
+                </div>
         <div id="prefill-loading" class="loading-indicator" style="display: none;">
             <div class="spinner"></div>
             <span>Zoeken...</span>
-        </div>
+                </div>
         <div id="prefill-error" class="error-message" style="display: none;"></div>
-    </div>
-
+            </div>
+            
     <!-- Search Results (temporary) -->
-    <div id="prefill-results" class="results-overlay" style="display: none;">
+    <div id="prefill-results" class="results-overlay" style="display: none; z-index: 1000;">
         <div class="results-container">
             <div class="results-header">
                 <h3>Zoekresultaten</h3>
                 <button class="close-results" onclick="document.getElementById('prefill-results').style.display='none'">×</button>
             </div>
-            <div id="prefill-results-list" class="results-list"></div>
-        </div>
+                <div id="prefill-results-list" class="results-list"></div>
+                </div>
     </div>
 
     <!-- Main Content - Person Display -->
@@ -72,13 +72,17 @@ script('openregister', 'prefill-test');
                 </div>
             </div>
         </div>
-
+        
         <!-- Details Layout -->
         <div class="details-layout">
             <!-- Categories Sidebar -->
             <div class="details-categories">
-                <div class="category-item active" data-category="persoon">
+                <div class="category-item" data-category="inschrijving">
                     <span class="category-number">01.</span>
+                    <span class="category-name">Inschrijving</span>
+                </div>
+                <div class="category-item active" data-category="persoon">
+                    <span class="category-number">02.</span>
                     <span class="category-name">Persoon</span>
                     <div class="category-submenu">
                         <div class="submenu-item active" data-sub="actueel">
@@ -99,41 +103,90 @@ script('openregister', 'prefill-test');
                     </div>
                 </div>
                 <div class="category-item" data-category="ouder1">
-                    <span class="category-number">02.</span>
+                    <span class="category-number">03.</span>
                     <span class="category-name">Ouder 1</span>
                 </div>
                 <div class="category-item" data-category="ouder2">
-                    <span class="category-number">03.</span>
+                    <span class="category-number">04.</span>
                     <span class="category-name">Ouder 2</span>
                 </div>
                 <div class="category-item" data-category="nationaliteit">
-                    <span class="category-number">04.</span>
+                    <span class="category-number">05.</span>
                     <span class="category-name">Nationaliteit</span>
                     <span class="badge-count" id="nationaliteit-badge" style="display: none;">0</span>
                 </div>
                 <div class="category-item" data-category="partner">
-                    <span class="category-number">05.</span>
-                    <span class="category-name">Huwelijk/GPS</span>
-                </div>
-                <div class="category-item" data-category="inschrijving">
-                    <span class="category-number">07.</span>
-                    <span class="category-name">Inschrijving</span>
+                    <span class="category-number">06.</span>
+                    <span class="category-name">Huwelijk/Geregistreerd partnerschap</span>
                 </div>
                 <div class="category-item" data-category="verblijfplaats">
+                    <span class="category-number">07.</span>
+                    <span class="category-name">Verblijfplaats (adres)</span>
+                    <div class="category-submenu">
+                        <div class="submenu-item active" data-sub="actueel">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                            <span>Actueel</span>
+                        </div>
+                        <div class="submenu-item" data-sub="historie">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>Historie</span>
+                            <span class="badge-count" id="verblijfplaats-historie-badge" style="display: none;">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="category-item" data-category="verblijfstitel">
                     <span class="category-number">08.</span>
-                    <span class="category-name">Verblijfplaats</span>
+                    <span class="category-name">Verblijfstitel</span>
+                </div>
+                <div class="category-item" data-category="verblijf-buitenland">
+                    <span class="category-number">09.</span>
+                    <span class="category-name">Verblijf in het buitenland</span>
                 </div>
                 <div class="category-item" data-category="kinderen">
-                    <span class="category-number">09.</span>
-                    <span class="category-name">Kinderen</span>
+                    <span class="category-number">10.</span>
+                    <span class="category-name">Kind</span>
                     <span class="badge-count" id="kinderen-badge" style="display: none;">0</span>
                 </div>
-            </div>
-
+                <div class="category-item" data-category="overlijden">
+                    <span class="category-number">11.</span>
+                    <span class="category-name">Overlijden</span>
+                </div>
+                <div class="category-item" data-category="verblijfsaantekening">
+                    <span class="category-number">12.</span>
+                    <span class="category-name">Verblijfsaantekening EU/EER</span>
+                </div>
+                <div class="category-item" data-category="gezag">
+                    <span class="category-number">13.</span>
+                    <span class="category-name">Gezag</span>
+                </div>
+                <div class="category-item" data-category="reisdocument">
+                    <span class="category-number">14.</span>
+                    <span class="category-name">Reisdocument</span>
+                </div>
+                <div class="category-item" data-category="kiesrecht">
+                    <span class="category-number">15.</span>
+                    <span class="category-name">Kiesrecht</span>
+                </div>
+                <div class="category-item" data-category="verwijzing">
+                    <span class="category-number">16.</span>
+                    <span class="category-name">Verwijzing</span>
+                </div>
+                <div class="category-item" data-category="contactgegevens">
+                    <span class="category-number">21.</span>
+                    <span class="category-name">Contactgegevens (optioneel)</span>
+                </div>
+                </div>
+                
             <!-- Details Panel -->
             <div class="details-panel">
                 <div class="details-header">
-                    <h2 class="details-title" id="details-title">Details: 01. Persoon</h2>
+                    <h2 class="details-title" id="details-title">Details: 02. Persoon</h2>
                     <div class="details-toggles">
                         <label class="toggle-switch">
                             <input type="checkbox" id="toggle-descriptions">
@@ -145,147 +198,353 @@ script('openregister', 'prefill-test');
                             <span class="toggle-slider"></span>
                             <span class="toggle-label">Toon lege elementen</span>
                         </label>
-                    </div>
-                </div>
+                            </div>
+                            </div>
 
                 <!-- Person Details -->
                 <div class="detail-section active" data-category="persoon">
                     <div class="detail-section-title">Actueel</div>
                     <div class="detail-grid">
                         <div class="detail-row">
-                            <div class="detail-label">01.10 A-Nummer</div>
+                            <div class="detail-label">01.10 a-nummer</div>
                             <div class="detail-value" id="detail-anummer">-</div>
-                        </div>
+                            </div>
                         <div class="detail-row">
-                            <div class="detail-label">01.20 Burgerservicenummer</div>
+                            <div class="detail-label">01.20 burgerservicenummer</div>
                             <div class="detail-value" id="detail-bsn">-</div>
-                        </div>
+                            </div>
                         <div class="detail-row">
-                            <div class="detail-label">02.10 Voornamen</div>
+                            <div class="detail-label">02.10 voornamen</div>
                             <div class="detail-value" id="detail-voornamen">-</div>
-                        </div>
+                            </div>
                         <div class="detail-row">
-                            <div class="detail-label">02.40 Geslachtsnaam</div>
+                            <div class="detail-label">02.40 geslachtsnaam</div>
                             <div class="detail-value" id="detail-geslachtsnaam">-</div>
-                        </div>
+                            </div>
                         <div class="detail-row">
-                            <div class="detail-label">03.10 Geboortedatum</div>
+                            <div class="detail-label">03.10 geboortedatum</div>
                             <div class="detail-value" id="detail-geboortedatum">-</div>
-                        </div>
+                            </div>
                         <div class="detail-row">
-                            <div class="detail-label">03.20 Geboorteplaats</div>
+                            <div class="detail-label">03.20 geboorteplaats</div>
                             <div class="detail-value" id="detail-geboorteplaats">-</div>
-                        </div>
+                            </div>
                         <div class="detail-row">
-                            <div class="detail-label">03.30 Geboorteland</div>
+                            <div class="detail-label">03.30 geboorteland</div>
                             <div class="detail-value" id="detail-geboorteland">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">04.40 Geslachtsaanduiding</div>
+                            <div class="detail-label">04.10 geslachtsaanduiding</div>
                             <div class="detail-value" id="detail-geslachtsaanduiding">-</div>
                         </div>
+                        <div class="detail-row">
+                            <div class="detail-label">62.10 datum ingang familierechtelijke betrekking</div>
+                            <div class="detail-value" id="detail-persoon-datum-ingang-familierechtelijke-betrekking">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.10 gemeente document</div>
+                            <div class="detail-value" id="detail-persoon-gemeente-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.20 datum document</div>
+                            <div class="detail-value" id="detail-persoon-datum-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.30 beschrijving document</div>
+                            <div class="detail-value" id="detail-persoon-beschrijving-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.10 ingangsdatum geldigheid</div>
+                            <div class="detail-value" id="detail-persoon-ingangsdatum-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.11 volgcode geldigheid</div>
+                            <div class="detail-value" id="detail-persoon-volgcode-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">86.10 datum van opneming</div>
+                            <div class="detail-value" id="detail-persoon-datum-opneming">-</div>
+                        </div>
+                        </div>
                     </div>
-                </div>
-
+                    
                 <!-- Ouder 1 Details -->
                 <div class="detail-section" data-category="ouder1" style="display: none;">
-                    <div class="detail-section-title">Ouder 1</div>
+                    <div class="detail-section-title">Actueel</div>
                     <div class="detail-grid">
                         <div class="detail-row">
-                            <div class="detail-label">BSN</div>
+                            <div class="detail-label">01.20 burgerservicenummer</div>
                             <div class="detail-value" id="detail-ouder1-bsn">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Voornamen</div>
+                            <div class="detail-label">02.10 voornamen</div>
                             <div class="detail-value" id="detail-ouder1-voornamen">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Voorvoegsel</div>
-                            <div class="detail-value" id="detail-ouder1-voorvoegsel">-</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Geslachtsnaam</div>
+                            <div class="detail-label">02.40 geslachtsnaam</div>
                             <div class="detail-value" id="detail-ouder1-geslachtsnaam">-</div>
                         </div>
+                        <div class="detail-row">
+                            <div class="detail-label">62.10 datum ingang familierechtelijke betrekking</div>
+                            <div class="detail-value" id="detail-ouder1-datum-ingang-familierechtelijke-betrekking">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.10 gemeente document</div>
+                            <div class="detail-value" id="detail-ouder1-gemeente-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.20 datum document</div>
+                            <div class="detail-value" id="detail-ouder1-datum-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.30 beschrijving document</div>
+                            <div class="detail-value" id="detail-ouder1-beschrijving-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.10 ingangsdatum geldigheid</div>
+                            <div class="detail-value" id="detail-ouder1-ingangsdatum-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.11 volgcode geldigheid</div>
+                            <div class="detail-value" id="detail-ouder1-volgcode-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">86.10 datum van opneming</div>
+                            <div class="detail-value" id="detail-ouder1-datum-opneming">-</div>
+                        </div>
+                        </div>
                     </div>
-                </div>
-
+                    
                 <!-- Ouder 2 Details -->
                 <div class="detail-section" data-category="ouder2" style="display: none;">
-                    <div class="detail-section-title">Ouder 2</div>
+                    <div class="detail-section-title">Actueel</div>
                     <div class="detail-grid">
                         <div class="detail-row">
-                            <div class="detail-label">BSN</div>
+                            <div class="detail-label">01.20 burgerservicenummer</div>
                             <div class="detail-value" id="detail-ouder2-bsn">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Voornamen</div>
+                            <div class="detail-label">02.10 voornamen</div>
                             <div class="detail-value" id="detail-ouder2-voornamen">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Voorvoegsel</div>
-                            <div class="detail-value" id="detail-ouder2-voorvoegsel">-</div>
-                        </div>
-                        <div class="detail-row">
-                            <div class="detail-label">Geslachtsnaam</div>
+                            <div class="detail-label">02.40 geslachtsnaam</div>
                             <div class="detail-value" id="detail-ouder2-geslachtsnaam">-</div>
                         </div>
-                    </div>
-                </div>
+                        <div class="detail-row">
+                            <div class="detail-label">05.10 nationaliteit</div>
+                            <div class="detail-value" id="detail-ouder2-nationaliteit">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">63.10 reden opname nationaliteit</div>
+                            <div class="detail-value" id="detail-ouder2-reden-opname-nationaliteit">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.10 gemeente document</div>
+                            <div class="detail-value" id="detail-ouder2-gemeente-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.20 datum document</div>
+                            <div class="detail-value" id="detail-ouder2-datum-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.30 beschrijving document</div>
+                            <div class="detail-value" id="detail-ouder2-beschrijving-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.10 ingangsdatum geldigheid</div>
+                            <div class="detail-value" id="detail-ouder2-ingangsdatum-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.11 volgcode geldigheid</div>
+                            <div class="detail-value" id="detail-ouder2-volgcode-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">86.10 datum van opneming</div>
+                            <div class="detail-value" id="detail-ouder2-datum-opneming">-</div>
+                        </div>
+    </div>
+</div>
 
                 <!-- Partner Details -->
                 <div class="detail-section" data-category="partner" style="display: none;">
-                    <div class="detail-section-title">Huwelijk/GPS</div>
+                    <div class="detail-section-title">Actueel</div>
                     <div class="detail-grid">
                         <div class="detail-row">
-                            <div class="detail-label">BSN Partner</div>
+                            <div class="detail-label">01.10 a-nummer</div>
+                            <div class="detail-value" id="detail-partner-anummer">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">01.20 burgerservicenummer</div>
                             <div class="detail-value" id="detail-partner-bsn">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Voornamen</div>
+                            <div class="detail-label">02.10 voornamen</div>
                             <div class="detail-value" id="detail-partner-voornamen">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Voorvoegsel</div>
-                            <div class="detail-value" id="detail-partner-voorvoegsel">-</div>
+                            <div class="detail-label">02.40 geslachtsnaam</div>
+                            <div class="detail-value" id="detail-partner-geslachtsnaam">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Geslachtsnaam</div>
-                            <div class="detail-value" id="detail-partner-geslachtsnaam">-</div>
+                            <div class="detail-label">03.10 geboortedatum</div>
+                            <div class="detail-value" id="detail-partner-geboortedatum">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">03.20 geboorteplaats</div>
+                            <div class="detail-value" id="detail-partner-geboorteplaats">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">03.30 geboorteland</div>
+                            <div class="detail-value" id="detail-partner-geboorteland">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">04.10 geslachtsaanduiding</div>
+                            <div class="detail-value" id="detail-partner-geslachtsaanduiding">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">06.10 datum huwelijkssluiting/aangaan GPS</div>
+                            <div class="detail-value" id="detail-partner-datum-huwelijkssluiting">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">06.20 plaats huwelijkssluiting/aangaan GPS</div>
+                            <div class="detail-value" id="detail-partner-plaats-huwelijkssluiting">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">06.30 land huwelijkssluiting/aangaan GPS</div>
+                            <div class="detail-value" id="detail-partner-land-huwelijkssluiting">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">15.10 soort verbintenis</div>
+                            <div class="detail-value" id="detail-partner-soort-verbintenis">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.10 gemeente document</div>
+                            <div class="detail-value" id="detail-partner-gemeente-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.20 datum document</div>
+                            <div class="detail-value" id="detail-partner-datum-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.30 beschrijving document</div>
+                            <div class="detail-value" id="detail-partner-beschrijving-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.10 ingangsdatum geldigheid</div>
+                            <div class="detail-value" id="detail-partner-ingangsdatum-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.11 volgcode geldigheid</div>
+                            <div class="detail-value" id="detail-partner-volgcode-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">86.10 datum van opneming</div>
+                            <div class="detail-value" id="detail-partner-datum-opneming">-</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Verblijfplaats Details -->
                 <div class="detail-section" data-category="verblijfplaats" style="display: none;">
-                    <div class="detail-section-title">Verblijfplaats</div>
-                    <div class="detail-grid">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid" id="verblijfplaats-actueel">
                         <div class="detail-row">
-                            <div class="detail-label">Straatnaam</div>
-                            <div class="detail-value" id="detail-straatnaam">-</div>
+                            <div class="detail-label">09.10 gemeente van inschrijving</div>
+                            <div class="detail-value" id="detail-verblijfplaats-gemeente-inschrijving">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Huisnummer</div>
-                            <div class="detail-value" id="detail-huisnummer">-</div>
+                            <div class="detail-label">09.11 code gemeente van inschrijving</div>
+                            <div class="detail-value" id="detail-verblijfplaats-code-gemeente-inschrijving">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Huisnummertoevoeging</div>
-                            <div class="detail-value" id="detail-huisnummertoevoeging">-</div>
+                            <div class="detail-label">09.20 datum inschrijving</div>
+                            <div class="detail-value" id="detail-verblijfplaats-datum-inschrijving">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Postcode</div>
-                            <div class="detail-value" id="detail-postcode">-</div>
+                            <div class="detail-label">10.10 functie adres</div>
+                            <div class="detail-value" id="detail-verblijfplaats-functie-adres">-</div>
                         </div>
                         <div class="detail-row">
-                            <div class="detail-label">Woonplaats</div>
-                            <div class="detail-value" id="detail-woonplaats">-</div>
+                            <div class="detail-label">10.20 gemeentedeel</div>
+                            <div class="detail-value" id="detail-verblijfplaats-gemeentedeel">-</div>
                         </div>
+                        <div class="detail-row">
+                            <div class="detail-label">10.30 datum aanvang adreshouding</div>
+                            <div class="detail-value" id="detail-verblijfplaats-datum-aanvang-adreshouding">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.10 straatnaam</div>
+                            <div class="detail-value" id="detail-verblijfplaats-straatnaam">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.11 straatnaam (officieel)</div>
+                            <div class="detail-value" id="detail-verblijfplaats-straatnaam-officieel">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.12 straatnaam (NEN)</div>
+                            <div class="detail-value" id="detail-verblijfplaats-straatnaam-nen">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.15 openbare ruimte</div>
+                            <div class="detail-value" id="detail-verblijfplaats-openbare-ruimte">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.20 huisnummer</div>
+                            <div class="detail-value" id="detail-verblijfplaats-huisnummer">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.60 postcode</div>
+                            <div class="detail-value" id="detail-verblijfplaats-postcode">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.70 woonplaatsnaam</div>
+                            <div class="detail-value" id="detail-verblijfplaats-woonplaatsnaam">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.80 identificatie verblijfplaats</div>
+                            <div class="detail-value" id="detail-verblijfplaats-identificatie-verblijfplaats">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.90 identificatiecode nummeraanduiding</div>
+                            <div class="detail-value" id="detail-verblijfplaats-identificatiecode-nummeraanduiding">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">14.10 land vanwaar ingeschreven</div>
+                            <div class="detail-value" id="detail-verblijfplaats-land-vanwaar-ingeschreven">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">14.20 datum vestiging in Nederland</div>
+                            <div class="detail-value" id="detail-verblijfplaats-datum-vestiging-nederland">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">72.10 omschrijving van de aangifte adreshouding</div>
+                            <div class="detail-value" id="detail-verblijfplaats-omschrijving-aangifte-adreshouding">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.10 ingangsdatum geldigheid</div>
+                            <div class="detail-value" id="detail-verblijfplaats-ingangsdatum-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.11 volgcode geldigheid</div>
+                            <div class="detail-value" id="detail-verblijfplaats-volgcode-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">86.10 datum van opneming</div>
+                            <div class="detail-value" id="detail-verblijfplaats-datum-opneming">-</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Verblijfplaats Historie -->
+                    <div class="detail-section-title" id="verblijfplaats-historie-title" style="display: none; margin-top: 32px;">Historie</div>
+                    <div id="verblijfplaats-historie-list" class="verblijfplaats-historie-list" style="display: none;">
+                        <!-- Historische adressen worden hier dynamisch toegevoegd -->
                     </div>
                 </div>
 
                 <!-- Kinderen Details -->
                 <div class="detail-section" data-category="kinderen" style="display: none;">
-                    <div class="detail-section-title">Kinderen</div>
+                    <div class="detail-section-title">Kind</div>
                     <div id="kinderen-details-list" class="kinderen-list">
                         <!-- Kinderen worden hier dynamisch toegevoegd -->
                     </div>
@@ -296,6 +555,296 @@ script('openregister', 'prefill-test');
                     <div class="detail-section-title">Nationaliteiten</div>
                     <div id="nationaliteiten-details-list" class="nationaliteiten-list">
                         <!-- Nationaliteiten worden hier dynamisch toegevoegd -->
+                    </div>
+                </div>
+
+                <!-- Inschrijving Details -->
+                <div class="detail-section" data-category="inschrijving" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">01.10 a-nummer</div>
+                            <div class="detail-value" id="detail-inschrijving-anummer">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">01.20 burgerservicenummer</div>
+                            <div class="detail-value" id="detail-inschrijving-bsn">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.10 gemeente document</div>
+                            <div class="detail-value" id="detail-inschrijving-gemeente-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.20 datum document</div>
+                            <div class="detail-value" id="detail-inschrijving-datum-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.30 beschrijving document</div>
+                            <div class="detail-value" id="detail-inschrijving-beschrijving-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.10 ingangsdatum geldigheid</div>
+                            <div class="detail-value" id="detail-inschrijving-ingangsdatum-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.11 volgcode geldigheid</div>
+                            <div class="detail-value" id="detail-inschrijving-volgcode-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">86.10 datum van opneming</div>
+                            <div class="detail-value" id="detail-inschrijving-datum-opneming">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verblijfstitel Details -->
+                <div class="detail-section" data-category="verblijfstitel" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">09.10 gemeente van inschrijving</div>
+                            <div class="detail-value" id="detail-verblijfstitel-gemeente-inschrijving">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">09.11 code gemeente van inschrijving</div>
+                            <div class="detail-value" id="detail-verblijfstitel-code-gemeente-inschrijving">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">09.20 datum inschrijving</div>
+                            <div class="detail-value" id="detail-verblijfstitel-datum-inschrijving">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">10.10 functie adres</div>
+                            <div class="detail-value" id="detail-verblijfstitel-functie-adres">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">10.20 gemeentedeel</div>
+                            <div class="detail-value" id="detail-verblijfstitel-gemeentedeel">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">10.30 datum aanvang adreshouding</div>
+                            <div class="detail-value" id="detail-verblijfstitel-datum-aanvang-adreshouding">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.10 straatnaam</div>
+                            <div class="detail-value" id="detail-verblijfstitel-straatnaam">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.11 straatnaam (officieel)</div>
+                            <div class="detail-value" id="detail-verblijfstitel-straatnaam-officieel">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.12 straatnaam (NEN)</div>
+                            <div class="detail-value" id="detail-verblijfstitel-straatnaam-nen">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.15 openbare ruimte</div>
+                            <div class="detail-value" id="detail-verblijfstitel-openbare-ruimte">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.20 huisnummer</div>
+                            <div class="detail-value" id="detail-verblijfstitel-huisnummer">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.60 postcode</div>
+                            <div class="detail-value" id="detail-verblijfstitel-postcode">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.70 woonplaatsnaam</div>
+                            <div class="detail-value" id="detail-verblijfstitel-woonplaatsnaam">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.80 identificatie verblijfplaats</div>
+                            <div class="detail-value" id="detail-verblijfstitel-identificatie-verblijfplaats">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.90 identificatiecode nummeraanduiding</div>
+                            <div class="detail-value" id="detail-verblijfstitel-identificatiecode-nummeraanduiding">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">14.10 land vanwaar ingeschreven</div>
+                            <div class="detail-value" id="detail-verblijfstitel-land-vanwaar-ingeschreven">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">14.20 datum vestiging in Nederland</div>
+                            <div class="detail-value" id="detail-verblijfstitel-datum-vestiging-nederland">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">72.10 omschrijving van de aangifte adreshouding</div>
+                            <div class="detail-value" id="detail-verblijfstitel-omschrijving-aangifte-adreshouding">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.10 ingangsdatum geldigheid</div>
+                            <div class="detail-value" id="detail-verblijfstitel-ingangsdatum-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.11 volgcode geldigheid</div>
+                            <div class="detail-value" id="detail-verblijfstitel-volgcode-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">86.10 datum van opneming</div>
+                            <div class="detail-value" id="detail-verblijfstitel-datum-opneming">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verblijf in het buitenland Details -->
+                <div class="detail-section" data-category="verblijf-buitenland" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">01.10 a-nummer</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-anummer">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">01.20 burgerservicenummer</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-bsn">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">02.10 voornamen</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-voornamen">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">02.40 geslachtsnaam</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-geslachtsnaam">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">03.10 geboortedatum</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-geboortedatum">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">03.20 geboorteplaats</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-geboorteplaats">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">03.30 geboorteland</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-geboorteland">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.10 gemeente document</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-gemeente-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.20 datum document</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-datum-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">82.30 beschrijving document</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-beschrijving-document">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.10 ingangsdatum geldigheid</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-ingangsdatum-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">85.11 volgcode geldigheid</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-volgcode-geldigheid">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">86.10 datum van opneming</div>
+                            <div class="detail-value" id="detail-verblijf-buitenland-datum-opneming">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overlijden Details -->
+                <div class="detail-section" data-category="overlijden" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">11.10 datum overlijden</div>
+                            <div class="detail-value" id="detail-overlijden-datum">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.20 plaats overlijden</div>
+                            <div class="detail-value" id="detail-overlijden-plaats">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">11.30 land overlijden</div>
+                            <div class="detail-value" id="detail-overlijden-land">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verblijfsaantekening EU/EER Details -->
+                <div class="detail-section" data-category="verblijfsaantekening" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">12.10 aantekening</div>
+                            <div class="detail-value" id="detail-verblijfsaantekening">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gezag Details -->
+                <div class="detail-section" data-category="gezag" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">13.10 burgerservicenummer gezagdrager</div>
+                            <div class="detail-value" id="detail-gezag-bsn">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">13.20 naam gezagdrager</div>
+                            <div class="detail-value" id="detail-gezag-naam">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reisdocument Details -->
+                <div class="detail-section" data-category="reisdocument" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">14.10 documentnummer</div>
+                            <div class="detail-value" id="detail-reisdocument-nummer">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">14.20 type</div>
+                            <div class="detail-value" id="detail-reisdocument-type">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kiesrecht Details -->
+                <div class="detail-section" data-category="kiesrecht" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">15.10 kiesrecht</div>
+                            <div class="detail-value" id="detail-kiesrecht">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Verwijzing Details -->
+                <div class="detail-section" data-category="verwijzing" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">16.10 type verwijzing</div>
+                            <div class="detail-value" id="detail-verwijzing-type">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">16.20 verwijzing naar</div>
+                            <div class="detail-value" id="detail-verwijzing-naar">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contactgegevens Details -->
+                <div class="detail-section" data-category="contactgegevens" style="display: none;">
+                    <div class="detail-section-title">Actueel</div>
+                    <div class="detail-grid">
+                        <div class="detail-row">
+                            <div class="detail-label">21.10 telefoonnummer</div>
+                            <div class="detail-value" id="detail-contact-telefoon">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">21.20 e-mailadres</div>
+                            <div class="detail-value" id="detail-contact-email">-</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -325,9 +874,20 @@ script('openregister', 'prefill-test');
     background: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;
+    height: 100vh;
+    width: 100%;
     padding: 0;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 /* Search Bar */
@@ -528,8 +1088,26 @@ script('openregister', 'prefill-test');
 /* Person Display Container */
 .person-display-container {
     padding: 24px 32px;
-    max-width: 1600px;
-    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#person-display {
+    display: none !important;
+}
+
+#person-display.visible,
+#person-display[style*="block"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* Person Overview Card */
@@ -602,6 +1180,9 @@ script('openregister', 'prefill-test');
     display: flex;
     gap: 24px;
     align-items: flex-start;
+    flex: 1;
+    overflow: visible;
+    min-height: 0;
 }
 
 /* Categories Sidebar */
@@ -614,6 +1195,9 @@ script('openregister', 'prefill-test');
     display: flex;
     flex-direction: column;
     gap: 4px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 200px);
 }
 
 .category-item {
@@ -661,21 +1245,17 @@ script('openregister', 'prefill-test');
 }
 
 .category-submenu {
-    position: absolute;
-    left: 100%;
-    top: 0;
     margin-left: 8px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 8px;
+    margin-top: 4px;
+    padding: 4px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
     min-width: 150px;
-    display: none;
-    z-index: 10;
 }
 
 .category-item.active .category-submenu {
-    display: block;
+    display: flex;
 }
 
 .submenu-item {
@@ -710,7 +1290,10 @@ script('openregister', 'prefill-test');
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 24px;
-    min-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    max-height: calc(100vh - 200px);
 }
 
 .details-header {
@@ -800,13 +1383,22 @@ script('openregister', 'prefill-test');
 }
 
 .detail-grid {
-    display: grid;
-    grid-template-columns: 250px 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 0;
 }
 
 .detail-row {
-    display: contents;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border-color);
+    min-height: 40px;
+    align-items: center;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
 }
 
 .detail-label {
@@ -814,19 +1406,16 @@ script('openregister', 'prefill-test');
     font-size: 13px;
     font-weight: 500;
     padding: 10px 16px 10px 0;
-    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
 }
 
 .detail-value {
     color: var(--text-primary);
     font-size: 13px;
     padding: 10px 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.detail-row:last-child .detail-label,
-.detail-row:last-child .detail-value {
-    border-bottom: none;
+    display: flex;
+    align-items: center;
 }
 
 /* Kinderen & Nationaliteiten Lists */
@@ -855,9 +1444,58 @@ script('openregister', 'prefill-test');
 
 .kind-detail-grid,
 .nationaliteit-detail-grid {
-    display: grid;
-    grid-template-columns: 200px 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 0;
+}
+
+.kind-detail-grid .detail-row,
+.nationaliteit-detail-grid .detail-row {
+    grid-template-columns: 200px 1fr;
+}
+
+/* Verblijfplaats Historie */
+.verblijfplaats-historie-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 16px;
+}
+
+.historie-item {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.historie-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.historie-item-header h5 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.historie-datum {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-left: 12px;
+}
+
+.no-historie {
+    padding: 24px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
 }
 
 /* Responsive */
@@ -901,5 +1539,43 @@ script('openregister', 'prefill-test');
         padding-bottom: 12px;
         border-bottom: 1px solid var(--border-color);
     }
+}
+
+/* Forceer scrolling op body en html voor Nextcloud */
+html, body {
+    height: 100% !important;
+    overflow: visible !important;
+}
+
+#content, #app-content {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: 100% !important;
+    max-height: none !important;
+    width: 100% !important;
+    background: var(--bg-primary) !important;
+}
+
+#app-content-wrapper {
+    height: 100% !important;
+    overflow: visible !important;
+    width: 100% !important;
+    background: var(--bg-primary) !important;
+}
+
+/* Verberg Nextcloud sidebar en andere elementen die ruimte innemen */
+#app-sidebar,
+#app-navigation,
+.app-sidebar-header {
+    display: none !important;
+}
+
+/* Zorg dat de main content area de volledige breedte gebruikt */
+#app-content-vue,
+#content-vue,
+.app-content {
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
 }
 </style>

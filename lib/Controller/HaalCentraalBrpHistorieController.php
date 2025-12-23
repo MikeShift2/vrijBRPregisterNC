@@ -172,6 +172,7 @@ class HaalCentraalBrpHistorieController extends Controller {
             
             // Query alle verblijfplaatsen (historisch) via vb_ax tabel
             // vb_ax bevat alle verblijfplaatsen met historie
+            // Voor historie: filter op hist='Z' (historisch) OF meerdere adressen waarvan er één historisch is
             // Kolommen: d_geld (geldigheidsdatum), d_aanv (aanvangsdatum/ingangsdatum), d_vertrek (vertrekdatum/einddatum)
             $stmt = $pdo->prepare("
                 SELECT DISTINCT
@@ -196,6 +197,10 @@ class HaalCentraalBrpHistorieController extends Controller {
                 LEFT JOIN straat s ON vb.c_straat = s.c_straat
                 LEFT JOIN plaats w ON vb.c_wpl = w.c_plaats
                 WHERE vb.pl_id = :pl_id 
+                    AND (
+                        vb.hist = 'Z' 
+                        OR (vb.d_vertrek IS NOT NULL AND vb.d_vertrek != -1)
+                    )
                 ORDER BY 
                     CASE WHEN vb.d_geld = -1 THEN 99999999 ELSE vb.d_geld END DESC,
                     CASE WHEN vb.d_aanv = -1 THEN 99999999 ELSE vb.d_aanv END DESC,
@@ -205,10 +210,12 @@ class HaalCentraalBrpHistorieController extends Controller {
             $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             
             $historie = [];
+            error_log("getVerblijfplaatshistorieFromPostgres: Found " . count($results) . " rows for pl_id $plId");
+            
             foreach ($results as $row) {
                 $verblijfplaats = [];
                 
-                // Basis adresgegevens
+                // Basis adresgegevens - altijd toevoegen als ze bestaan
                 if (!empty($row['straatnaam'])) {
                     $verblijfplaats['straatnaam'] = trim($row['straatnaam']);
                 }
@@ -254,11 +261,22 @@ class HaalCentraalBrpHistorieController extends Controller {
                     }
                 }
                 
+                // Debug logging
+                error_log("Historie item: " . json_encode([
+                    'straatnaam' => $verblijfplaats['straatnaam'] ?? null,
+                    'huisnummer' => $verblijfplaats['huisnummer'] ?? null,
+                    'postcode' => $verblijfplaats['postcode'] ?? null,
+                    'hist' => $row['historie'] ?? null,
+                    'd_vertrek' => $row['einddatum'] ?? null
+                ]));
+                
                 // Alleen toevoegen als er minimaal één veld is
                 if (!empty($verblijfplaats)) {
                     $historie[] = $verblijfplaats;
                 }
             }
+            
+            error_log("getVerblijfplaatshistorieFromPostgres: Returning " . count($historie) . " historie items");
             
             return $historie;
             
