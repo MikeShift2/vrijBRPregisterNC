@@ -1441,6 +1441,66 @@ class HaalCentraalBrpController extends Controller {
     }
     
     /**
+     * GET /ingeschrevenpersonen/{burgerservicenummer}/verblijfsaantekening
+     * Haal Centraal BRP Bevragen: Verblijfsaantekening EU/EER van persoon
+     * 
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function getVerblijfsaantekening(string $burgerservicenummer): JSONResponse {
+        try {
+            if (!preg_match('/^\d{9}$/', $burgerservicenummer)) {
+                return new JSONResponse([
+                    'status' => 400,
+                    'title' => 'Bad Request',
+                    'detail' => 'Invalid BSN format. BSN must be 9 digits.'
+                ], 400);
+            }
+            
+            $persoon = $this->getPersonByBsnFromDatabase($burgerservicenummer, $this->getSchemaId());
+            if (empty($persoon['data'])) {
+                return new JSONResponse([
+                    'status' => 404,
+                    'title' => 'Not Found',
+                    'detail' => 'Person not found'
+                ], 404);
+            }
+            
+            $persoonData = $persoon['data'][0]['object'] ?? [];
+            $plId = $persoonData['pl_id'] ?? null;
+            
+            // Als pl_id niet beschikbaar is, haal het op via BSN uit PostgreSQL
+            if (!$plId) {
+                $plId = $this->getPlIdFromBsn($burgerservicenummer);
+            }
+            
+            if (!$plId) {
+                return new JSONResponse([
+                    '_embedded' => [
+                        'verblijfsaantekeningen' => []
+                    ]
+                ]);
+            }
+            
+            // Haal verblijfsaantekeningen op uit PostgreSQL
+            $verblijfsaantekeningen = $this->getVerblijfsaantekeningFromPostgres($plId);
+            
+            return new JSONResponse([
+                '_embedded' => [
+                    'verblijfsaantekeningen' => $verblijfsaantekeningen
+                ]
+            ]);
+            
+        } catch (\Exception $e) {
+            return new JSONResponse([
+                'status' => 500,
+                'title' => 'Internal Server Error',
+                'detail' => $e->getMessage()
+            ], 500);
+        }
+    }
+    
+    /**
      * Haal pl_id op uit PostgreSQL op basis van BSN
      */
     private function getPlIdFromBsn(string $bsn): ?int {
@@ -1729,6 +1789,72 @@ class HaalCentraalBrpController extends Controller {
             return $nationaliteiten;
         } catch (\Exception $e) {
             error_log("PostgreSQL query error in getNationaliteitenFromPostgres: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    /**
+     * Haal verblijfsaantekeningen op uit PostgreSQL (aant3 tabel)
+     */
+    private function getVerblijfsaantekeningFromPostgres(?int $plId): array {
+        if (!$plId) {
+            return [];
+        }
+        
+        try {
+            // Directe PostgreSQL connectie via PDO
+            $pdo = new \PDO(
+                'pgsql:host=host.docker.internal;port=5432;dbname=bevax;options=-csearch_path=probev',
+                'postgres',
+                'postgres'
+            );
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            
+            // Haal pl_id op via a1, a2, a3 uit pl tabel
+            $stmt = $pdo->prepare("SELECT a1, a2, a3 FROM pl WHERE pl_id = :pl_id LIMIT 1");
+            $stmt->execute(['pl_id' => $plId]);
+            $plRow = $stmt->fetch(\PDO::FETCH_ASSOC);
+            
+            if (!$plRow || !isset($plRow['a1']) || !isset($plRow['a2']) || !isset($plRow['a3'])) {
+                return [];
+            }
+            
+            // Query verblijfsaantekeningen via aant3 tabel
+            $stmt = $pdo->prepare("
+                SELECT 
+                    a3.a1,
+                    a3.a2,
+                    a3.a3,
+                    a3.c_aantek3,
+                    a3.aant as aantekening
+                FROM aant3 a3
+                WHERE a3.a1 = :a1 
+                AND a3.a2 = :a2 
+                AND a3.a3 = :a3
+                AND a3.aant IS NOT NULL
+                AND a3.aant != ''
+            ");
+            $stmt->execute([
+                'a1' => $plRow['a1'],
+                'a2' => $plRow['a2'],
+                'a3' => $plRow['a3']
+            ]);
+            $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            
+            $verblijfsaantekeningen = [];
+            foreach ($results as $row) {
+                $aantekening = $row['aantekening'] ?? null;
+                
+                if ($aantekening) {
+                    $verblijfsaantekeningen[] = [
+                        'aantekening' => trim($aantekening)
+                    ];
+                }
+            }
+            
+            return $verblijfsaantekeningen;
+        } catch (\Exception $e) {
+            error_log("PostgreSQL query error in getVerblijfsaantekeningFromPostgres: " . $e->getMessage());
             return [];
         }
     }

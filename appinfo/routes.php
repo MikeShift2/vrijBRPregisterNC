@@ -290,6 +290,7 @@ return [
         ['name' => 'HaalCentraalBrp#getOuders', 'url' => '/ingeschrevenpersonen/{burgerservicenummer}/ouders', 'verb' => 'GET', 'requirements' => ['burgerservicenummer' => '[0-9]{9}']],
         ['name' => 'HaalCentraalBrp#getVerblijfplaats', 'url' => '/ingeschrevenpersonen/{burgerservicenummer}/verblijfplaats', 'verb' => 'GET', 'requirements' => ['burgerservicenummer' => '[0-9]{9}']],
         ['name' => 'HaalCentraalBrp#getNationaliteiten', 'url' => '/ingeschrevenpersonen/{burgerservicenummer}/nationaliteiten', 'verb' => 'GET', 'requirements' => ['burgerservicenummer' => '[0-9]{9}']],
+        ['name' => 'HaalCentraalBrp#getVerblijfsaantekening', 'url' => '/ingeschrevenpersonen/{burgerservicenummer}/verblijfsaantekening', 'verb' => 'GET', 'requirements' => ['burgerservicenummer' => '[0-9]{9}']],
         
         // Haal Centraal BRP Historie API 2.0 endpoints
         ['name' => 'HaalCentraalBrpHistorie#getVerblijfplaatshistorie', 'url' => '/ingeschrevenpersonen/{burgerservicenummer}/verblijfplaatshistorie', 'verb' => 'GET', 'requirements' => ['burgerservicenummer' => '[0-9]{9}']],

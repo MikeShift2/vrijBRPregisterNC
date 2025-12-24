@@ -1381,11 +1381,72 @@
                 detailVerblijfBuitenlandDatumOpnemingEl.textContent = datumOpneming;
             }
             
+            // Haal verblijfsaantekening data op (categorie 12)
+            loadVerblijfsaantekening(bsn);
+            
             // Andere categorieën zijn mogelijk niet beschikbaar in Haal Centraal BRP Bevragen API
             // Deze worden leeg gelaten of kunnen later worden toegevoegd als de data beschikbaar komt
         })
         .catch(function(error) {
             console.warn('Fout bij ophalen aanvullende categorie data:', error);
+        });
+    }
+    
+    /**
+     * Haal verblijfsaantekening data op en vul deze in
+     */
+    function loadVerblijfsaantekening(bsn) {
+        var baseUrl = API_BASE + '/ingeschrevenpersonen/' + encodeURIComponent(bsn) + '/verblijfsaantekening';
+        
+        fetch(baseUrl, {
+            method: 'GET',
+            headers: { 'Accept': 'application/json', 'OCS-APIRequest': 'true' },
+            credentials: 'include'
+        })
+        .then(function(response) {
+            if (!response.ok) {
+                console.warn('Kon verblijfsaantekening data niet ophalen:', response.status);
+                return { _embedded: { verblijfsaantekeningen: [] } };
+            }
+            return response.json();
+        })
+        .then(function(data) {
+            console.log('Verblijfsaantekening response:', data);
+            
+            var verblijfsaantekeningen = [];
+            if (data && data._embedded && data._embedded.verblijfsaantekeningen) {
+                verblijfsaantekeningen = data._embedded.verblijfsaantekeningen;
+            } else if (Array.isArray(data)) {
+                verblijfsaantekeningen = data;
+            }
+            
+            // Vul de eerste aantekening in (of combineer alle aantekeningen)
+            var detailVerblijfsaantekeningEl = document.getElementById('detail-verblijfsaantekening');
+            if (detailVerblijfsaantekeningEl) {
+                if (verblijfsaantekeningen.length > 0) {
+                    // Combineer alle aantekeningen met komma's
+                    var aantekeningen = verblijfsaantekeningen.map(function(aant) {
+                        return aant.aantekening || '-';
+                    }).filter(function(aant) {
+                        return aant !== '-';
+                    });
+                    
+                    if (aantekeningen.length > 0) {
+                        detailVerblijfsaantekeningEl.textContent = aantekeningen.join(', ');
+                    } else {
+                        detailVerblijfsaantekeningEl.textContent = '-';
+                    }
+                } else {
+                    detailVerblijfsaantekeningEl.textContent = '-';
+                }
+            }
+        })
+        .catch(function(error) {
+            console.warn('Fout bij ophalen verblijfsaantekening data:', error);
+            var detailVerblijfsaantekeningEl = document.getElementById('detail-verblijfsaantekening');
+            if (detailVerblijfsaantekeningEl) {
+                detailVerblijfsaantekeningEl.textContent = '-';
+            }
         });
     }
     
